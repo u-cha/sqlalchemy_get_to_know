@@ -1,6 +1,7 @@
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, text, Table, MetaData
 from sqlalchemy.orm import Session
 
+metadata = MetaData()
 # using core.Engine
 engine = create_engine("sqlite+pysqlite:///:memory:", echo=True)
 with engine.connect() as connection:
@@ -16,12 +17,21 @@ with engine.connect() as connection:
     for row in result3:
         print(f"x: {row.x}, y: {row.y}")
 
+    # autoloading existing table with "autoload_with"
+    new_table = Table('my_table', metadata, autoload_with=engine)
+    output = connection.execute(text('SELECT * FROM my_table'))
+    for row in output:
+        print(row)
+
 #using orm.Session
 statement = text("SELECT x, y FROM my_table WHERE y >= :y ORDER BY x, y")
 with Session(engine) as session:
     result = session.execute(statement, {"y": 1})
     for row in result:
         print(f"From Session x: {row.x}  y: {row.y}")
+
+
+
 
 # using .begin(), which autocommits implicitely
 

@@ -22,8 +22,6 @@ user_table = Table(
     Column("fullname", String())
 )
 
-
-
 print(user_table.c.keys())
 print(user_table.primary_key)
 
@@ -32,6 +30,3 @@ print(address_table.description)
 
 metadata_obj.create_all(engine)
 metadata_obj.drop_all(engine)
-
-
-

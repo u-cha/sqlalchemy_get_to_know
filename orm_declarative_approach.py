@@ -4,6 +4,7 @@ from sqlalchemy import String, ForeignKey, Column, Integer, create_engine
 
 engine = create_engine("sqlite+pysqlite:///:memory:", echo=True)
 
+
 class Base(DeclarativeBase):
     ...
 
@@ -38,4 +39,3 @@ print(type(User.__tablename__), User.__tablename__)
 sergey = User(name='Sergey', fullname='Sergey Udachin')
 
 Base.metadata.create_all(engine)
-
